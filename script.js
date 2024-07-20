@@ -27,4 +27,35 @@ function operate(first, second, opt) {
   }
 }
 
-let firstNumber, operator, secondNumber;
+let firstNumber, opt, secondNumber;
+const numberButtons = document.querySelectorAll(".number");
+numberButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    const display = document.querySelector(".display");
+    display.textContent += button.textContent;
+  });
+});
+
+const operators = document.querySelectorAll(".operator");
+operators.forEach(operator => {
+  operator.addEventListener("click", () => {
+    const display = document.querySelector(".display");
+    firstNumber = Number(display.textContent);
+    opt = operator.textContent;
+    display.textContent += " " + operator.textContent + " ";
+  });
+});
+
+const clear = document.querySelector(".clear");
+clear.addEventListener("click", () => {
+  const display = document.querySelector(".display");
+  display.textContent = "";
+});
+
+const result = document.querySelector(".equal");
+result.addEventListener("click", () => {
+  const display = document.querySelector(".display");
+  secondNumber = Number(display.textContent.split(opt)[1]);
+  display.textContent = operate(firstNumber, secondNumber, opt);
+  opt = "";
+});
