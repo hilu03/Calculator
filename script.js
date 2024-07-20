@@ -86,5 +86,7 @@ result.addEventListener("click", () => {
   secondNumber = Number(display.textContent);
   display.textContent = operate(firstNumber, secondNumber, opt);
   opt = "";
+  secondNumber = 0;
+  firstNumber = 0;
   turnOffClick();
 });
