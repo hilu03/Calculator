@@ -14,7 +14,17 @@ function divide(a, b) {
   return a / b;
 }
 
-console.log(add(3, 4));
-console.log(subtract(2, 5));
-console.log(multiply(3, 2));
-console.log(divide(6, 4));
+function operate(first, second, opt) {
+  switch(opt) {
+    case "+":
+      return add(first, second);
+    case "-":
+      return subtract(first, second);
+    case "*":
+      return multiply(first, second);
+    case "/":
+      return divide(first, second);
+  }
+}
+
+let firstNumber, operator, secondNumber;
