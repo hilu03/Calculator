@@ -27,11 +27,25 @@ function operate(first, second, opt) {
   }
 }
 
-let firstNumber, opt, secondNumber;
+function turnOffClick() {
+  const operators = document.querySelectorAll(".operator");
+  operators.forEach(operator => {
+    operator.style.opacity = 1;
+  });
+}
+
+let firstNumber = 0;
+let secondNumber = 0;
+let opt;
+
 const numberButtons = document.querySelectorAll(".number");
 numberButtons.forEach(button => {
   button.addEventListener("click", () => {
     const display = document.querySelector(".display");
+    if (opt && !secondNumber) {
+      display.textContent = "";
+      secondNumber = 1;
+    }
     display.textContent += button.textContent;
   });
 });
@@ -42,7 +56,8 @@ operators.forEach(operator => {
     const display = document.querySelector(".display");
     firstNumber = Number(display.textContent);
     opt = operator.textContent;
-    display.textContent += " " + operator.textContent + " ";
+    turnOffClick();
+    operator.style.opacity = 0.7;
   });
 });
 
@@ -50,12 +65,17 @@ const clear = document.querySelector(".clear");
 clear.addEventListener("click", () => {
   const display = document.querySelector(".display");
   display.textContent = "";
+  opt = "";
+  firstNumber = 0;
+  secondNumber = 0;
+  turnOffClick();
 });
 
 const result = document.querySelector(".equal");
 result.addEventListener("click", () => {
   const display = document.querySelector(".display");
-  secondNumber = Number(display.textContent.split(opt)[1]);
+  secondNumber = Number(display.textContent);
   display.textContent = operate(firstNumber, secondNumber, opt);
   opt = "";
+  turnOffClick();
 });
