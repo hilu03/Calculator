@@ -54,7 +54,16 @@ const operators = document.querySelectorAll(".operator");
 operators.forEach(operator => {
   operator.addEventListener("click", () => {
     const display = document.querySelector(".display");
-    firstNumber = Number(display.textContent);
+    if (opt) {
+      secondNumber = Number(display.textContent);
+      const result = operate(firstNumber, secondNumber, opt);
+      display.textContent =  result;
+      firstNumber = result;
+      secondNumber = 0;
+    }
+    else {
+      firstNumber = Number(display.textContent);
+    }
     opt = operator.textContent;
     turnOffClick();
     operator.style.opacity = 0.7;
