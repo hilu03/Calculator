@@ -48,8 +48,11 @@ numberButtons.forEach(button => {
   button.addEventListener("click", () => {
     const display = document.querySelector(".display");
     if (start) {
-      display.textContent = "";
-      start = false;
+      if (button.textContent != "0") {
+        display.textContent = "";
+        start = false;  
+      }
+      return;
     }
     else if (error) {
       display.textContent = "";
