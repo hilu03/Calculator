@@ -36,13 +36,18 @@ function turnOffClick() {
 
 let firstNumber = 0;
 let secondNumber = 0;
+let start = true;
 let opt;
 
 const numberButtons = document.querySelectorAll(".number");
 numberButtons.forEach(button => {
   button.addEventListener("click", () => {
     const display = document.querySelector(".display");
-    if (opt && !secondNumber) {
+    if (start) {
+      display.textContent = "";
+      start = false;
+    }
+    else if ((opt && !secondNumber)) {
       display.textContent = "";
       secondNumber = 1;
     }
@@ -73,8 +78,9 @@ operators.forEach(operator => {
 const clear = document.querySelector(".clear");
 clear.addEventListener("click", () => {
   const display = document.querySelector(".display");
-  display.textContent = "";
+  display.textContent = "0";
   opt = "";
+  start = true;
   firstNumber = 0;
   secondNumber = 0;
   turnOffClick();
@@ -82,11 +88,13 @@ clear.addEventListener("click", () => {
 
 const result = document.querySelector(".equal");
 result.addEventListener("click", () => {
-  const display = document.querySelector(".display");
-  secondNumber = Number(display.textContent);
-  display.textContent = operate(firstNumber, secondNumber, opt);
-  opt = "";
-  secondNumber = 0;
-  firstNumber = 0;
-  turnOffClick();
+  if (opt) {
+    const display = document.querySelector(".display");
+    secondNumber = Number(display.textContent);
+    display.textContent = operate(firstNumber, secondNumber, opt);
+    opt = "";
+    secondNumber = 0;
+    firstNumber = 0;
+    turnOffClick();  
+  }
 });

@@ -52,7 +52,7 @@ h1 {
 }
 
 .display {
-  align-self: self-end;
+  align-self: self-start;
   padding: 0 20px;
   margin-bottom: 20px;
   font-size: 24px;
