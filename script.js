@@ -52,7 +52,9 @@ numberButtons.forEach(button => {
         display.textContent = "";
         start = false;  
       }
-      return;
+      else {
+        return;
+      }
     }
     else if (error) {
       display.textContent = "";

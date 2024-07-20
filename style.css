@@ -53,8 +53,10 @@ h1 {
 
 .display {
   align-self: self-start;
-  padding: 0 20px;
+  padding-left: 20px;
   margin-bottom: 20px;
   font-size: 24px;
+  max-width: 273px;
+  box-sizing: border-box;
   overflow: hidden;
 }
