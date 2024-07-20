@@ -11,7 +11,11 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
-  return a / b;
+  if (b != 0) {
+    return a / b;
+  }
+  error = true;
+  return "Oops!";
 }
 
 function operate(first, second, opt) {
@@ -36,7 +40,7 @@ function turnOffClick() {
 
 let firstNumber = 0;
 let secondNumber = 0;
-let start = true;
+let start = true, error = false;
 let opt;
 
 const numberButtons = document.querySelectorAll(".number");
@@ -46,6 +50,10 @@ numberButtons.forEach(button => {
     if (start) {
       display.textContent = "";
       start = false;
+    }
+    else if (error) {
+      display.textContent = "";
+      error = false;
     }
     else if ((opt && !secondNumber)) {
       display.textContent = "";
@@ -59,11 +67,16 @@ const operators = document.querySelectorAll(".operator");
 operators.forEach(operator => {
   operator.addEventListener("click", () => {
     const display = document.querySelector(".display");
-    if (opt) {
+    if (error) {
+      display.textContent =  "0";
+      firstNumber = 0;
+      error = false;
+    }
+    else if (opt) {
       secondNumber = Number(display.textContent);
       const result = operate(firstNumber, secondNumber, opt);
       display.textContent =  result;
-      firstNumber = result;
+      firstNumber = result != "Oops!"? result: 0;
       secondNumber = 0;
     }
     else {
