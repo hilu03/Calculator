@@ -166,3 +166,13 @@ decimal.addEventListener("click", () => {
     start = false;
   }
 });
+
+const negative = document.querySelector(".negative");
+negative.addEventListener("click", () => {
+  const display = document.querySelector(".display");
+  let current = Number(display.textContent);
+  if (current != 0) {
+    current /= -1;
+  }
+  display.textContent = current;
+});

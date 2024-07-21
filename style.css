@@ -14,7 +14,7 @@ h1 {
   background-color: orange;
   text-align: center;
   width: 300px;
-  margin: auto;
+  margin: 40px auto 30px;
   padding: 10px 0;
 }
 
@@ -24,7 +24,7 @@ h1 {
   align-items: center;
   justify-content: center;
   max-width: 400px;
-  margin: 70px auto;
+  margin: auto;
   gap: 10px;
   padding: 50px;
   border: 3px solid orange;
