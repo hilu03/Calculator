@@ -36,6 +36,9 @@ function operate(first, second, opt) {
   if (!result) {
     start = true;
   }
+  else if (result.toString().includes(".")) {
+    dotExist = true;
+  }
   return result;
 }
 
@@ -136,7 +139,6 @@ result.addEventListener("click", () => {
     secondNumber = 0;
     firstNumber = 0;
     turnOffClick();
-    dotExist = false; 
   }
 });
 
