@@ -19,6 +19,7 @@ function divide(a, b) {
 }
 
 function operate(first, second, opt) {
+  console.log(opt)
   switch(opt) {
     case "+":
       return add(first, second);
@@ -87,7 +88,7 @@ operators.forEach(operator => {
     else {
       firstNumber = Number(display.textContent);
     }
-    opt = operator.textContent;
+    opt = operator.dataset.opt;
     turnOffClick();
     operator.style.opacity = 0.7;
   });
