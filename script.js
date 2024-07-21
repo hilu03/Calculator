@@ -15,7 +15,7 @@ function divide(a, b) {
     return a / b;
   }
   error = true;
-  return "Oops!";
+  return "@-@";
 }
 
 function operate(first, second, opt) {
@@ -46,16 +46,15 @@ function turnOffClick() {
   });
 }
 
-let firstNumber = 0;
-let secondNumber = 0;
-let start = true, error = false;
+let firstNumber = 0, secondNumber = 0;
+let start = true, error = false, dotExist = false;
 let opt;
 
 const numberButtons = document.querySelectorAll(".number");
 numberButtons.forEach(button => {
   button.addEventListener("click", () => {
     const display = document.querySelector(".display");
-    if (start) {
+    if (start && dotExist) {
       if (button.textContent != "0") {
         display.textContent = "";
         start = false;  
@@ -72,7 +71,7 @@ numberButtons.forEach(button => {
       display.textContent = "";
       secondNumber = 1;
     }
-    display.textContent += button.textContent;
+    display.textContent = Number(display.textContent + button.textContent);
   });
 });
 
@@ -89,7 +88,7 @@ operators.forEach(operator => {
       secondNumber = Number(display.textContent);
       const result = operate(firstNumber, secondNumber, opt);
       display.textContent =  result;
-      firstNumber = result != "Oops!"? result: 0;
+      firstNumber = result != "@-@"? result: 0;
       secondNumber = 0;
     }
     else {
@@ -98,6 +97,7 @@ operators.forEach(operator => {
     opt = operator.dataset.opt;
     turnOffClick();
     operator.style.opacity = 0.7;
+    dotExist = false;
   });
 });
 
@@ -109,6 +109,7 @@ allClear.addEventListener("click", () => {
   start = true;
   firstNumber = 0;
   secondNumber = 0;
+  dotExist = false; 
   turnOffClick();
 });
 
@@ -121,7 +122,8 @@ result.addEventListener("click", () => {
     opt = "";
     secondNumber = 0;
     firstNumber = 0;
-    turnOffClick();  
+    turnOffClick();
+    dotExist = false; 
   }
 });
 
@@ -137,3 +139,16 @@ percent.addEventListener("click", () => {
   }
 });
 
+const decimal = document.querySelector(".decimal");
+decimal.addEventListener("click", () => {
+  if (!dotExist) {
+    const display = document.querySelector(".display");
+    if (opt) {
+      display.textContent = "0";
+      secondNumber = 1;
+    }
+    display.textContent += ".";
+    dotExist = true;
+    start = false;
+  }
+});
