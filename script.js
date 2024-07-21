@@ -113,6 +113,19 @@ allClear.addEventListener("click", () => {
   turnOffClick();
 });
 
+const clear = document.querySelector(".clear");
+clear.addEventListener("click", () => {
+  const display = document.querySelector(".display");
+  const current = display.textContent;
+  if (current.length == 1) {
+    display.textContent = "0";
+    start = true;
+  }
+  else {
+    display.textContent = current.slice(0, current.length - 1);
+  }
+});
+
 const result = document.querySelector(".equal");
 result.addEventListener("click", () => {
   if (opt) {
