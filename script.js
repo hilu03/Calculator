@@ -117,7 +117,7 @@ const clear = document.querySelector(".clear");
 clear.addEventListener("click", () => {
   const display = document.querySelector(".display");
   const current = display.textContent;
-  if (current.length == 1) {
+  if ((current.length == 1) || (current.length == 2 && current.includes("-"))) {
     display.textContent = "0";
     start = true;
   }
