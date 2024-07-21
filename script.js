@@ -93,8 +93,8 @@ operators.forEach(operator => {
   });
 });
 
-const clear = document.querySelector(".clear");
-clear.addEventListener("click", () => {
+const allClear = document.querySelector(".all-clear");
+allClear.addEventListener("click", () => {
   const display = document.querySelector(".display");
   display.textContent = "0";
   opt = "";

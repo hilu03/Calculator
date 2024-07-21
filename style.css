@@ -1,10 +1,11 @@
-* {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 18px;
-  color: white;
-}
+@import url('https://fonts.cdnfonts.com/css/calculator?styles=116340');
 
-body {
+* {
+  font-family: 'Calculator', sans-serif;;
+  font-size: 20px;
+  color: white;
+  box-sizing: border-box;
+  font-weight: bold;
   background-color: black;
 }
 
@@ -22,11 +23,12 @@ h1 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-width: 300px;
+  max-width: 400px;
   margin: 70px auto;
   gap: 10px;
   padding: 50px;
   border: 3px solid orange;
+  background-color: black;
 }
 
 .row {
@@ -52,11 +54,13 @@ h1 {
 }
 
 .display {
-  align-self: self-start;
-  padding-left: 20px;
+  color: black;
   margin-bottom: 20px;
-  font-size: 24px;
-  max-width: 273px;
-  box-sizing: border-box;
+  font-size: 60px;
+  width: 340px;
+  height: 60px;
   overflow: hidden;
+  background-color: gray;
+  display: flex;
+  justify-content: flex-end;
 }
