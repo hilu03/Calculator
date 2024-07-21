@@ -57,7 +57,6 @@ numberButtons.forEach(button => {
     if (start && dotExist) {
       if (button.textContent != "0") {
         display.textContent = "";
-        start = false;  
       }
       else {
         return;
@@ -71,6 +70,7 @@ numberButtons.forEach(button => {
       display.textContent = "";
       secondNumber = 1;
     }
+    start = false;  
     display.textContent = Number(display.textContent + button.textContent);
   });
 });
@@ -143,6 +143,7 @@ result.addEventListener("click", () => {
 const percent = document.querySelector(".percent");
 percent.addEventListener("click", () => {
   if (!start) {
+    console.log(1);
     const display = document.querySelector(".display");
     let n = (Number(display.textContent) / 100).toString();
     if (n.includes(".") && n.split(".")[1].length > 8) {
