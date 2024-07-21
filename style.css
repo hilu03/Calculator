@@ -58,8 +58,8 @@ h1 {
   margin-bottom: 20px;
   font-size: 60px;
   width: 340px;
-  height: 60px;
-  overflow: hidden;
+  height: 70px;
+  overflow-x: hidden;
   background-color: gray;
   text-align: right;
 }

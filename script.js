@@ -39,7 +39,7 @@ function operate(first, second, opt) {
   else if (result.toString().includes(".")) {
     dotExist = true;
   }
-  return result;
+  return displayNumber(result);
 }
 
 function turnOffClick() {
@@ -48,6 +48,21 @@ function turnOffClick() {
     operator.style.opacity = 1;
   });
 }
+
+function displayNumber(number) {
+  let str = Number(number).toString();
+  if (str.split(".")[0].length > 6) {
+    number = Number(number).toExponential(6);
+    if (number.toString().includes(".")) {
+      dotExist = true;
+    }
+  }
+  else if (str.includes(".") && str.split(".")[1].length > 8) {
+    number = Number(number).toFixed(8);
+  }
+  return number;
+}
+
 
 let firstNumber = 0, secondNumber = 0;
 let start = true, error = false, dotExist = false;
@@ -73,8 +88,16 @@ numberButtons.forEach(button => {
       display.textContent = "";
       secondNumber = 1;
     }
-    start = false;  
-    display.textContent = Number(display.textContent + button.textContent);
+    start = false;
+    const current = display.textContent;
+    let number;
+    if (current.includes("e")) {
+      number = Number(Number(display.textContent).toString() + button.textContent);
+    }
+    else {
+      number = Number(display.textContent + button.textContent);
+    }
+    display.textContent = displayNumber(number);
   });
 });
 
@@ -125,6 +148,9 @@ clear.addEventListener("click", () => {
     start = true;
   }
   else {
+    if (current[current.length - 1] == ".") {
+      dotExist = false;
+    }
     display.textContent = current.slice(0, current.length - 1);
   }
 });
@@ -134,7 +160,7 @@ result.addEventListener("click", () => {
   if (opt) {
     const display = document.querySelector(".display");
     secondNumber = Number(display.textContent);
-    display.textContent = operate(firstNumber, secondNumber, opt);
+    display.textContent = displayNumber(operate(firstNumber, secondNumber, opt));
     opt = "";
     secondNumber = 0;
     firstNumber = 0;
@@ -145,13 +171,9 @@ result.addEventListener("click", () => {
 const percent = document.querySelector(".percent");
 percent.addEventListener("click", () => {
   if (!start) {
-    console.log(1);
     const display = document.querySelector(".display");
     let n = (Number(display.textContent) / 100).toString();
-    if (n.includes(".") && n.split(".")[1].length > 8) {
-      n = Number(n).toFixed(7);
-    }
-    display.textContent = n;
+    display.textContent = displayNumber(n);
   }
 });
 
@@ -159,7 +181,7 @@ const decimal = document.querySelector(".decimal");
 decimal.addEventListener("click", () => {
   if (!dotExist) {
     const display = document.querySelector(".display");
-    if (opt) {
+    if (opt && !secondNumber) {
       display.textContent = "0";
       secondNumber = 1;
     }
@@ -176,5 +198,5 @@ negative.addEventListener("click", () => {
   if (current != 0) {
     current /= -1;
   }
-  display.textContent = current;
+  display.textContent = displayNumber(current);
 });
