@@ -19,17 +19,24 @@ function divide(a, b) {
 }
 
 function operate(first, second, opt) {
-  console.log(opt)
+  let result;
   switch(opt) {
     case "+":
-      return add(first, second);
+      result = add(first, second);
+      break;
     case "-":
-      return subtract(first, second);
+      result = subtract(first, second);
+      break;
     case "*":
-      return multiply(first, second);
+      result = multiply(first, second);
+      break;
     case "/":
-      return divide(first, second);
+      result = divide(first, second);
   }
+  if (!result) {
+    start = true;
+  }
+  return result;
 }
 
 function turnOffClick() {
@@ -117,3 +124,16 @@ result.addEventListener("click", () => {
     turnOffClick();  
   }
 });
+
+const percent = document.querySelector(".percent");
+percent.addEventListener("click", () => {
+  if (!start) {
+    const display = document.querySelector(".display");
+    let n = (Number(display.textContent) / 100).toString();
+    if (n.includes(".") && n.split(".")[1].length > 8) {
+      n = Number(n).toFixed(7);
+    }
+    display.textContent = n;
+  }
+});
+
