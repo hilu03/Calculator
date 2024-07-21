@@ -1,3 +1,105 @@
+let firstNumber = 0, secondNumber = 0;
+let start = true, error = false, dotExist = false;
+let opt;
+
+const numberButtons = document.querySelectorAll(".number");
+numberButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    numberEvent(button.textContent);
+  });
+});
+
+const operators = document.querySelectorAll(".operator");
+operators.forEach(operator => {
+  operator.addEventListener("click", () => {
+    operatorEvent(operator);
+  });
+});
+
+const allClear = document.querySelector(".all-clear");
+allClear.addEventListener("click", () => {
+  allClearEvent();
+});
+
+const clear = document.querySelector(".clear");
+clear.addEventListener("click", () => {
+  deleteEvent();
+});
+
+const result = document.querySelector(".equal");
+result.addEventListener("click", () => {
+  equalEvent();
+});
+
+const percent = document.querySelector(".percent");
+percent.addEventListener("click", () => {
+  percentEvent();
+});
+
+const decimal = document.querySelector(".decimal");
+decimal.addEventListener("click", () => {
+  decimalEvent();
+});
+
+const negative = document.querySelector(".negative");
+negative.addEventListener("click", () => {
+  negativeEvent();
+});
+
+window.addEventListener("keydown", (e) => {
+  const key = e.key.toLowerCase();
+  switch(key) {
+    case "0":
+    case "1":
+    case "2":
+    case "3":
+    case "4":
+    case "5":
+    case "6":
+    case "7":
+    case "8":
+    case "9":
+      numberEvent(key);
+      break;
+    case "+":
+      const plus = document.querySelector(`.operator[data-key="+"]`);
+      operatorEvent(plus);
+      break;
+    case "-":
+      const subtract = document.querySelector(`.operator[data-key="-"]`);
+      operatorEvent(subtract);
+      break;
+    case "*":
+      const multiply = document.querySelector(`.operator[data-key="*"]`);
+      operatorEvent(multiply);
+      break;
+    case "/":
+      const divide = document.querySelector(`.operator[data-key="/"]`);
+      operatorEvent(divide);
+      break;
+    case "%":
+      percentEvent();
+      break;
+    case "n":
+      negativeEvent();
+      break;
+    case ".":
+      decimalEvent();
+      break;
+    case "=":
+    case "enter":
+      equalEvent();
+      break;
+    case "c":
+      allClearEvent();
+      break;
+    case "backspace":
+      deleteEvent();
+      break;
+  }
+});
+
+
 function add(a, b) {
   return a + b;
 }
@@ -63,72 +165,60 @@ function displayNumber(number) {
   return number;
 }
 
-
-let firstNumber = 0, secondNumber = 0;
-let start = true, error = false, dotExist = false;
-let opt;
-
-const numberButtons = document.querySelectorAll(".number");
-numberButtons.forEach(button => {
-  button.addEventListener("click", () => {
-    const display = document.querySelector(".display");
-    if (start && dotExist) {
-      if (button.textContent != "0") {
-        display.textContent = "";
-      }
-      else {
-        return;
-      }
-    }
-    else if (error) {
+function numberEvent(n) {
+  const display = document.querySelector(".display");
+  if (start && dotExist) {
+    if (button.textContent != "0") {
       display.textContent = "";
-      error = false;
-    }
-    else if ((opt && !secondNumber)) {
-      display.textContent = "";
-      secondNumber = 1;
-    }
-    start = false;
-    const current = display.textContent;
-    let number;
-    if (current.includes("e")) {
-      number = Number(Number(display.textContent).toString() + button.textContent);
     }
     else {
-      number = Number(display.textContent + button.textContent);
+      return;
     }
-    display.textContent = displayNumber(number);
-  });
-});
+  }
+  else if (error) {
+    display.textContent = "";
+    error = false;
+  }
+  else if ((opt && !secondNumber)) {
+    display.textContent = "";
+    secondNumber = 1;
+  }
+  start = false;
+  const current = display.textContent;
+  let number;
+  if (current.includes("e")) {
+    number = Number(Number(display.textContent).toString() + n);
+  }
+  else {
+    number = Number(display.textContent + n);
+  }
+  display.textContent = displayNumber(number);
+}
 
-const operators = document.querySelectorAll(".operator");
-operators.forEach(operator => {
-  operator.addEventListener("click", () => {
-    const display = document.querySelector(".display");
-    if (error) {
-      display.textContent =  "0";
-      firstNumber = 0;
-      error = false;
-    }
-    else if (opt) {
-      secondNumber = Number(display.textContent);
-      const result = operate(firstNumber, secondNumber, opt);
-      display.textContent =  result;
-      firstNumber = result != "@-@"? result: 0;
-      secondNumber = 0;
-    }
-    else {
-      firstNumber = Number(display.textContent);
-    }
-    opt = operator.dataset.opt;
-    turnOffClick();
-    operator.style.opacity = 0.7;
-    dotExist = false;
-  });
-});
+function operatorEvent(operator) {
+  const display = document.querySelector(".display");
+  if (error) {
+    display.textContent =  "0";
+    firstNumber = 0;
+    error = false;
+  }
+  else if (opt) {
+    secondNumber = Number(display.textContent);
+    const result = operate(firstNumber, secondNumber, opt);
+    display.textContent =  result;
+    firstNumber = result != "@-@"? result: 0;
+    secondNumber = 0;
+  }
+  else {
+    firstNumber = Number(display.textContent);
+  }
+  opt = operator.dataset.key;
+  turnOffClick();
+  operator.style.opacity = 0.7;
+  dotExist = false;
+}
 
-const allClear = document.querySelector(".all-clear");
-allClear.addEventListener("click", () => {
+function allClearEvent() {
   const display = document.querySelector(".display");
   display.textContent = "0";
   opt = "";
@@ -137,10 +227,9 @@ allClear.addEventListener("click", () => {
   secondNumber = 0;
   dotExist = false; 
   turnOffClick();
-});
+}
 
-const clear = document.querySelector(".clear");
-clear.addEventListener("click", () => {
+function deleteEvent() {
   const display = document.querySelector(".display");
   const current = display.textContent;
   if ((current.length == 1) || (current.length == 2 && current.includes("-"))) {
@@ -153,10 +242,9 @@ clear.addEventListener("click", () => {
     }
     display.textContent = current.slice(0, current.length - 1);
   }
-});
+}
 
-const result = document.querySelector(".equal");
-result.addEventListener("click", () => {
+function equalEvent() {
   if (opt) {
     const display = document.querySelector(".display");
     secondNumber = Number(display.textContent);
@@ -166,19 +254,17 @@ result.addEventListener("click", () => {
     firstNumber = 0;
     turnOffClick();
   }
-});
+}
 
-const percent = document.querySelector(".percent");
-percent.addEventListener("click", () => {
+function percentEvent() {
   if (!start) {
     const display = document.querySelector(".display");
     let n = (Number(display.textContent) / 100).toString();
     display.textContent = displayNumber(n);
   }
-});
+}
 
-const decimal = document.querySelector(".decimal");
-decimal.addEventListener("click", () => {
+function decimalEvent() {
   if (!dotExist) {
     const display = document.querySelector(".display");
     if (opt && !secondNumber) {
@@ -189,14 +275,16 @@ decimal.addEventListener("click", () => {
     dotExist = true;
     start = false;
   }
-});
+}
 
-const negative = document.querySelector(".negative");
-negative.addEventListener("click", () => {
+function negativeEvent() {
   const display = document.querySelector(".display");
   let current = Number(display.textContent);
   if (current != 0) {
     current /= -1;
   }
+  else {
+    dotExist = false;
+  }
   display.textContent = displayNumber(current);
-});
+}

@@ -51,6 +51,7 @@ h1 {
   height: 70px;
   font-size: 30px;
   border-radius: 35px;
+  cursor: pointer;
 }
 
 .display {
